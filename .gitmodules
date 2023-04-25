@@ -1,0 +1,24 @@
+[submodule "integration/SoundUNder_ag"]
+	path = integration/SoundUNder_ag
+	url = https://github.com/swarch2023i/SoundUNder_ag
+[submodule "logic/SoundUNder_auth_ms"]
+	path = logic/SoundUNder_auth_ms
+	url = https://github.com/swarch2023i/SoundUNder_auth_ms.git
+[submodule "logic/SoundUNder_library_ms"]
+	path = logic/SoundUNder_library_ms
+	url = https://github.com/swarch2023i/SoundUNder_library_ms.git
+[submodule "logic/SoundUNder_analysis_ms"]
+	path = logic/SoundUNder_analysis_ms
+	url = https://github.com/swarch2023i/SoundUNder_analysis_ms.git
+[submodule "logic/SoundUNder_audio_ms"]
+	path = logic/SoundUNder_audio_ms
+	url = https://github.com/swarch2023i/SoundUNder_audio_ms.git
+[submodule "logic/SoundUNder_search_ms"]
+	path = logic/SoundUNder_search_ms
+	url = https://github.com/swarch2023i/SoundUNder_search_ms.git
+[submodule "apps/SoundUNder_wa"]
+	path = apps/SoundUNder_wa
+	url = https://github.com/swarch2023i/SoundUNder_wa.git
+[submodule "apps/SoundUNder_ma"]
+	path = apps/SoundUNder_ma
+	url = https://github.com/swarch2023i/SoundUNder_ma.git
