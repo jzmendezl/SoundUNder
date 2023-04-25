@@ -22,3 +22,6 @@
 [submodule "apps/SoundUNder_ma"]
 	path = apps/SoundUNder_ma
 	url = https://github.com/swarch2023i/SoundUNder_ma.git
+[submodule "mq/SoundUNder_mq"]
+	path = mq/SoundUNder_mq
+	url = https://github.com/swarch2023i/SoundUNder_mq.git

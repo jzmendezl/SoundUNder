@@ -1,0 +1,23 @@
+version: "3.8"
+name: "SoundUNder"
+
+services:
+  rabbitmq:
+    hostname: soundunder_mq
+    build:
+      context: ./SoundUNder_mq
+      args:
+        - RABBITMQ_USER=guest
+        - RABBITMQ_PASSWORD=guest
+    container_name: soundunder_mq
+    image: soundunder_mq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_USER=guest
+      - RABBITMQ_PASSWORD=guest
+      
+  volumes:
+    rabbitmq_data:
+    rabbitmq_log:

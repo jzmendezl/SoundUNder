@@ -1,0 +1,70 @@
+version: "3.8"
+name: "SoundUNder"
+
+# Layer Architecture
+services:
+  # Data Layer
+  SoundUNder_auth_db:
+    extends:
+      file: ./data/docker-compose.yml
+      service: SoundUNder_auth_db
+  db:
+    extends:
+      file: ./data/docker-compose.yml
+      service: db
+
+  # Logic Layer
+  SoundUNder_auth_ms:
+    extends:
+      file: ./logic/SoundUNder_auth_ms/docker-compose.yml
+      service: su_auth_ms
+    depends_on:
+      - SoundUNder_auth_db
+    links:
+      - SoundUNder_auth_db
+
+  ms:
+    extends:
+      file: ./logic/SoundUNder_audio_ms/docker-compose.yml
+      service: ms
+    depends_on:
+      - db
+    links:
+      - db
+
+  # Message Broker ***
+  #rabbitmq:
+   # extends:
+    #  file: ./mq/docker-compose.yml
+     # service: rabbitmq
+
+  # Integration Layer
+  SoundUNder_ag:
+    extends:
+      file: ./integration/SoundUNder_ag/docker-compose.yml
+      service: api-gateway
+    depends_on:
+      - SoundUNder_auth_ms
+      - ms
+      #- rabbitmq
+
+    links:
+      - SoundUNder_auth_ms
+      - ms
+      #- rabbitmq
+
+    environment:
+      - AUTH_MS_BASE_URL=http://SoundUNder_auth_ms:3000
+      - AUDIO_MS_BASE_URL=http://college-ms:8080
+
+      - FRONTEND_URL=https://localhost
+
+
+
+
+volumes:
+  su_auth_db_data:
+  mysql_data:
+
+  #rabbitmq_data:
+  #rabbitmq_log:
