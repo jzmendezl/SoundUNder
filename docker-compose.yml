@@ -1,19 +1,35 @@
 version: "3.8"
-name: "SoundUNder"
+name: "soundunder"
 
 # Layer Architecture
 services:
   # Data Layer
+  #auth_db:
   SoundUNder_auth_db:
     extends:
       file: ./data/docker-compose.yml
       service: SoundUNder_auth_db
+
+  #audio_db:
   db:
     extends:
       file: ./data/docker-compose.yml
       service: db
 
+  #library_db:
+  mongo:
+    extends:
+      file: ./data/docker-compose.yml
+      service: mongo
+
+  #search_db:
+  search_db:
+    extends:
+      file: ./data/docker-compose.yml
+      service: search_db
+
   # Logic Layer
+  #auth_ms:
   SoundUNder_auth_ms:
     extends:
       file: ./logic/SoundUNder_auth_ms/docker-compose.yml
@@ -23,6 +39,7 @@ services:
     links:
       - SoundUNder_auth_db
 
+  #audio_ms:
   ms:
     extends:
       file: ./logic/SoundUNder_audio_ms/docker-compose.yml
@@ -33,10 +50,34 @@ services:
       - db
 
   # Message Broker ***
-  #rabbitmq:
-   # extends:
-    #  file: ./mq/docker-compose.yml
-     # service: rabbitmq
+  rabbitmq:
+    extends:
+      file: ./mq/docker-compose.yml
+      service: rabbitmq
+
+  #analysis_ms:
+  analysis_ms:
+    extends:
+      file: ./logic/SoundUNder_analysis_ms/docker-compose.yml
+      service: analysis_ms
+    depends_on:
+      - rabbitmq
+
+  #library_ms:
+  library_ms:
+    extends:
+      file: ./logic/SoundUNder_library_ms/docker-compose.yml
+      service: library_ms
+    depends_on:
+      - mongo
+
+  #search_ms:
+  search_ms:
+    extends:
+      file: ./logic/SoundUNder_search_ms/docker-compose.yml
+      service: search_ms
+    depends_on:
+      - search_db
 
   # Integration Layer
   SoundUNder_ag:
@@ -59,12 +100,8 @@ services:
 
       - FRONTEND_URL=https://localhost
 
-
-
-
 volumes:
   su_auth_db_data:
   mysql_data:
-
-  #rabbitmq_data:
-  #rabbitmq_log:
+  mongo_data:
+  search_data:

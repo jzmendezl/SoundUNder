@@ -30,6 +30,31 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql_data/data
 
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: dAJXWz4reGQi
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  search_db:
+    image: postgres:13-alpine
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=soundUNder_search_db
+      - POSTGRES_USER=devuser
+      - POSTGRES_PASSWORD=1234
+    volumes:
+      - search_data:/var/lib/postgresql/data
+
 volumes:
   mysql_data:
   su_auth_db_data:
+  mongo_data:
+  search_data:

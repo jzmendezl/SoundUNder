@@ -1,11 +1,11 @@
 version: "3.8"
-name: "SoundUNder"
+name: "soundunder"
 
 services:
   rabbitmq:
     hostname: soundunder_mq
     build:
-      context: ./SoundUNder_mq
+      context: .
       args:
         - RABBITMQ_USER=guest
         - RABBITMQ_PASSWORD=guest
@@ -17,7 +17,3 @@ services:
     environment:
       - RABBITMQ_USER=guest
       - RABBITMQ_PASSWORD=guest
-      
-  volumes:
-    rabbitmq_data:
-    rabbitmq_log:
