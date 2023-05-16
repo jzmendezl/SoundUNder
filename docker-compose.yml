@@ -75,7 +75,7 @@ services:
   search_ms:
     extends:
       file: ./logic/SoundUNder_search_ms/docker-compose.yml
-      service: search_ms
+      service: app
     depends_on:
       - search_db
 
