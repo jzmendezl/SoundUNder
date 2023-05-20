@@ -10,23 +10,23 @@ services:
       file: ./data/docker-compose.yml
       service: SoundUNder_auth_db
 
-  # #audio_db:
-  # db:
-  #   extends:
-  #     file: ./data/docker-compose.yml
-  #     service: db
+  #audio_db:
+  db:
+    extends:
+      file: ./data/docker-compose.yml
+      service: db
 
   # #library_db:
-  # mongolib:
-  #   extends:
-  #     file: ./data/docker-compose.yml
-  #     service: mongolib
+  library_db:
+    extends:
+      file: ./data/docker-compose.yml
+      service: library_db
 
-  # #search_db:
-  # search_db:
-  #   extends:
-  #     file: ./data/docker-compose.yml
-  #     service: search_db
+  #search_db:
+  search_db:
+    extends:
+      file: ./data/docker-compose.yml
+      service: search_db
 
   # #analysis_db:
   # mongo_analysis:
@@ -44,70 +44,74 @@ services:
       - SoundUNder_auth_db
     links:
       - SoundUNder_auth_db
-    # #audio_ms:
-    # ms:
-    #   extends:
-    #     file: ./logic/SoundUNder_audio_ms/docker-compose.yml
-    #     service: ms
-    #   depends_on:
-    #     - db
-    #   links:
-    #     - db
 
-    # # Message Broker ***
-    # rabbitmq:
-    #   extends:
-    #     file: ./mq/docker-compose.yml
-    #     service: rabbitmq
+  #audio_ms:
+  ms:
+    extends:
+      file: ./logic/SoundUNder_audio_ms/docker-compose.yml
+      service: ms
+    depends_on:
+      - db
+    links:
+      - db
 
-    # #analysis_ms:
-    # analysis_ms:
-    #   extends:
-    #     file: ./logic/SoundUNder_analysis_ms/docker-compose.yml
-    #     service: analysis_ms
-    #   depends_on:
-    #     - rabbitmq
-    #     - mongo_analysis
+  # # Message Broker ***
+  # rabbitmq:
+  #   extends:
+  #     file: ./mq/docker-compose.yml
+  #     service: rabbitmq
 
-    # #library_ms:
-    # sistema_library_ms:
-    #   extends:
-    #     file: ./logic/SoundUNder_library_ms/docker-compose.yml
-    #     service: sistema_library_ms
-    #   depends_on:
-    #     - mongolib
+  # #analysis_ms:
+  # analysis_ms:
+  #   extends:
+  #     file: ./logic/SoundUNder_analysis_ms/docker-compose.yml
+  #     service: analysis_ms
+  #   depends_on:
+  #     - rabbitmq
+  #     - mongo_analysis
 
-    # #search_ms:
-    # search_ms:
-    # extends:
-    #   file: ./logic/SoundUNder_search_ms/docker-compose.yml
-    #   service: app
-    # depends_on:
-    #   - search_db
+  #library_ms:
+  sistema_library_ms:
+    extends:
+      file: ./logic/SoundUNder_library_ms/docker-compose.yml
+      service: sistema_library_ms
+    depends_on:
+      - library_db
 
-    # Integration Layer
+  #search_ms:
+  soundunder_search_ms:
+    extends:
+      file: ./logic/SoundUNder_search_ms/docker-compose.yml
+      service: soundunder_search_ms
+    depends_on:
+      - search_db
+    links:
+      - search_db
+
+  # Integration Layer
   SoundUNder_ag:
     extends:
       file: ./integration/SoundUNder_ag/docker-compose.yml
       service: api-gateway
     depends_on:
       - SoundUNder_auth_ms
-      # - ms
+      - ms
+      - sistema_library_ms
+      - soundunder_search_ms
       #- rabbitmq
 
     links:
       - SoundUNder_auth_ms
-      # - ms
-      #- rabbitmq
+      - ms
+      # - rabbitmq
 
     environment:
       - AUTH_MS_BASE_URL=http://SoundUNder_auth_ms:3000
       - AUDIO_MS_BASE_URL=http://college-ms:8080
+      # - FRONTEND_URL=https://localhost
 
-      - FRONTEND_URL=https://localhost
-
-  #Presentation Layer
-  #wa:
+      #Presentation Layer
+      #wa:
   SoundUNder_wa:
     extends:
       file: ./apps/SoundUNder_wa/docker-compose.yml
@@ -116,13 +120,12 @@ services:
       - SoundUNder_ag
     links:
       - SoundUNder_ag
-    environment:
-      - API_GATEWAY_BASE_URL=http://SoundUNder_ag:3000
-      - VITE_API_GATEWAY_URL=http://localhost:4000/graphql
 
 volumes:
   su_auth_db_data:
-    # mysql_data: # mongo_data:
+  mysql_data: # mongo_data:
+  SoundUNder_search_ms:
 
-    # search_data:
-    # data_su_lib:
+  search_data:
+  lib_db_data:
+  lib_db_config:

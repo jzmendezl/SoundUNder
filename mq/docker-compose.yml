@@ -1,19 +1,20 @@
-version: "3.8"
-name: "soundunder"
-
+version: "3.2"
 services:
   rabbitmq:
-    hostname: soundunder_mq
-    build:
-      context: .
-      args:
-        - RABBITMQ_USER=guest
-        - RABBITMQ_PASSWORD=guest
+    image: rabbitmq:3-management-alpine
     container_name: soundunder_mq
-    image: soundunder_mq
     ports:
-      - "5672:5672"
-      - "15672:15672"
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+      - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    networks:
+      - rabbitmq_go_net
     environment:
       - RABBITMQ_USER=guest
       - RABBITMQ_PASSWORD=guest
+
+networks:
+  rabbitmq_go_net:
+    driver: bridge

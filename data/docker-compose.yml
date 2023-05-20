@@ -11,7 +11,7 @@ services:
       POSTGRES_USER: SU_Admin
       POSTGRES_PASSWORD: SU2023auth
     ports:
-      - "5432:5432"
+      - "5454:5432"
     volumes:
       - su_auth_db_data:/var/lib/postgresql/data
 
@@ -30,20 +30,21 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql_data/data
 
-  mongolib:
+  library_db:
+    container_name: library_db
     image: mongo
-    container_name: mongolib
-    ports:
-      - 27017:27017
-    volumes:
-      - data_su_lib:/data/db
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=admin
-      - MONGO_INITDB_ROOT_PASSWORD=secret
-    command: mongo --host localhost --port 27017 -u admin -p secret --authenticationDatabase admin && use bd_library && db.createCollection("Playlists") && db.createCollection("Libraries")
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: pass
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+      - lib_db_data:/data/db
+      - lib_db_config:/data/configdb
 
   search_db:
-    image: postgres:13-alpine
+    image: postgres:13.2
     ports:
       - 5432:5432
     environment:
@@ -67,6 +68,7 @@ services:
 volumes:
   mysql_data:
   su_auth_db_data: # mongo_data:
-
+  SoundUNder_search_ms:
   search_data:
-  data_su_lib:
+  lib_db_data:
+  lib_db_config:
