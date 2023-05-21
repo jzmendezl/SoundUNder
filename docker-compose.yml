@@ -60,6 +60,8 @@ services:
     extends:
       file: ./mq/docker-compose.yml
       service: rabbitmq
+    networks:
+      - soundunder_network
 
   #analysis_ms:
   analysis_ms:
@@ -69,6 +71,11 @@ services:
     depends_on:
       - rabbitmq
       - mongo_analysis
+    links:
+      - rabbitmq
+      - mongo_analysis
+    networks:
+      - soundunder_network
 
   #library_ms:
   sistema_library_ms:
@@ -123,6 +130,10 @@ services:
       - SoundUNder_ag
     links:
       - SoundUNder_ag
+
+networks:
+  soundunder_network:
+    driver: bridge
 
 volumes:
   su_auth_db_data:

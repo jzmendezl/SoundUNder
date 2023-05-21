@@ -14,8 +14,8 @@ services:
       - RABBITMQ_PASSWORD=guest
 
     networks:
-      - soundunder_mq
+      - soundunder_network
 
 networks:
-  soundunder_mq:
+  soundunder_network:
     driver: bridge
