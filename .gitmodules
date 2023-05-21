@@ -13,9 +13,6 @@
 [submodule "logic/SoundUNder_audio_ms"]
 	path = logic/SoundUNder_audio_ms
 	url = git@github.com:swarch2023i/SoundUNder_audio_ms.git
-[submodule "logic/SoundUNder_search_ms"]
-	path = logic/SoundUNder_search_ms
-	url = git@github.com:swarch2023i/SoundUNder_search_ms.git
 [submodule "apps/SoundUNder_wa"]
 	path = apps/SoundUNder_wa
 	url = git@github.com:swarch2023i/SoundUNder_wa.git
