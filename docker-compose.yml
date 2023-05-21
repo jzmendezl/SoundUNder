@@ -88,7 +88,7 @@ services:
   #search_ms:
   soundunder_search_ms:
     extends:
-      file: ./logic/SoundUNder_search_ms/docker-compose.yml
+      file: ./logic/SoundUNder_search_msProv/docker-compose.yml
       service: soundunder_search_ms
     depends_on:
       - search_db
