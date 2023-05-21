@@ -9,12 +9,13 @@ services:
     volumes:
       - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
       - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
-    networks:
-      - rabbitmq_go_net
     environment:
       - RABBITMQ_USER=guest
       - RABBITMQ_PASSWORD=guest
 
+    networks:
+      - soundunder_mq
+
 networks:
-  rabbitmq_go_net:
+  soundunder_mq:
     driver: bridge

@@ -28,11 +28,11 @@ services:
       file: ./data/docker-compose.yml
       service: search_db
 
-  # #analysis_db:
-  # mongo_analysis:
-  #   extends:
-  #     file: ./data/docker-compose.yml
-  #     service: mongo_analysis
+  #analysis_db:
+  mongo_analysis:
+    extends:
+      file: ./data/docker-compose.yml
+      service: mongo_analysis
 
   # Logic Layer
   #auth_ms:
@@ -55,20 +55,20 @@ services:
     links:
       - db
 
-  # # Message Broker ***
-  # rabbitmq:
-  #   extends:
-  #     file: ./mq/docker-compose.yml
-  #     service: rabbitmq
+  # Message Broker ***
+  rabbitmq:
+    extends:
+      file: ./mq/docker-compose.yml
+      service: rabbitmq
 
-  # #analysis_ms:
-  # analysis_ms:
-  #   extends:
-  #     file: ./logic/SoundUNder_analysis_ms/docker-compose.yml
-  #     service: analysis_ms
-  #   depends_on:
-  #     - rabbitmq
-  #     - mongo_analysis
+  #analysis_ms:
+  analysis_ms:
+    extends:
+      file: ./logic/SoundUNder_analysis_ms/docker-compose.yml
+      service: analysis_ms
+    depends_on:
+      - rabbitmq
+      - mongo_analysis
 
   #library_ms:
   sistema_library_ms:
@@ -94,21 +94,24 @@ services:
       file: ./integration/SoundUNder_ag/docker-compose.yml
       service: api-gateway
     depends_on:
+      - rabbitmq
+      - analysis_ms
       - SoundUNder_auth_ms
       - ms
       - sistema_library_ms
       - soundunder_search_ms
-      #- rabbitmq
 
     links:
+      - rabbitmq
+      - analysis_ms
       - SoundUNder_auth_ms
       - ms
-      # - rabbitmq
-
-    environment:
-      - AUTH_MS_BASE_URL=http://SoundUNder_auth_ms:3000
-      - AUDIO_MS_BASE_URL=http://college-ms:8080
-      # - FRONTEND_URL=https://localhost
+      - sistema_library_ms
+      - soundunder_search_ms
+      # environment:
+      #   - AUTH_MS_BASE_URL=http://SoundUNder_auth_ms:3000
+      #   - AUDIO_MS_BASE_URL=http://college-ms:8080
+      #   # - FRONTEND_URL=https://localhost
 
       #Presentation Layer
       #wa:
