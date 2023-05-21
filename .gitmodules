@@ -25,3 +25,6 @@
 [submodule "mq/SoundUNder_mq"]
 	path = mq/SoundUNder_mq
 	url = git@github.com:swarch2023i/SoundUNder_mq.git
+[submodule "logic/SoundUNder_search_msProv"]
+	path = logic/SoundUNder_search_msProv
+	url = https://github.com/jzmendezl/SoundUNder_search_msProv.git
