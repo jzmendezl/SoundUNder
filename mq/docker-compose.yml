@@ -3,6 +3,7 @@ services:
   rabbitmq:
     image: rabbitmq:3.8.25-management-alpine
     container_name: soundunder_mq
+    restart: always
     ports:
       - 5672:5672
       - 15672:15672
