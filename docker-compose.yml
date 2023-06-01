@@ -131,6 +131,19 @@ services:
     links:
       - SoundUNder_ag
 
+  #Security Layer
+  #ldap
+  SoundUNder_ldap:
+    extends:
+      file: ./security/docker-compose.yml
+      service: account-ldap
+
+  #client ldap
+  Client_ldap:
+    extends:
+      file: ./security/docker-compose.yml
+      service: phpldapadmin
+      
 networks:
   soundunder_network:
     driver: bridge
