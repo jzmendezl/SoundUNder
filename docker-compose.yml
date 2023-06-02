@@ -133,17 +133,72 @@ services:
 
   #Security Layer
   #ldap
-  SoundUNder_ldap:
+  account-ldap:
     extends:
-      file: ./security/docker-compose.yml
+      file: ./security/SoundUNder_ldap/docker-compose.yml
       service: account-ldap
 
   #client ldap
-  Client_ldap:
+  phpldapadmin:
     extends:
-      file: ./security/docker-compose.yml
+      file: ./security/SoundUNder_ldap/docker-compose.yml
       service: phpldapadmin
-      
+
+    depends_on:
+      - account-ldap
+
+    links:
+      - account-ldap
+
+  #proxys
+  #proxy API Gateway
+  soundUNder_ag_rp:
+    extends:
+      file: ./security/SoundUNder_rps/docker-compose.yml
+      service: soundUNder_ag_rp
+
+    depends_on:
+      - SoundUNder_ag
+
+    links:
+      - SoundUNder_ag
+
+  #proxy WA
+  soundUNder_wa_rp:
+    extends:
+      file: ./security/SoundUNder_rps/docker-compose.yml
+      service: soundUNder_wa_rp
+
+    depends_on:
+      - SoundUNder_wa
+
+    links:
+      - SoundUNder_wa
+
+  #proxy interface
+  soundUNder_int_rp:
+    extends:
+      file: ./security/SoundUNder_rps/docker-compose.yml
+      service: soundUNder_int_rp
+
+    depends_on:
+      - interface
+
+    links:
+      - interface
+
+  #interface
+  interface:
+    extends:
+      file: ./interface/SoundUNder_int/docker-compose.yml
+      service: interface
+
+    depends_on:
+      - SoundUNder_ag
+
+    links:
+      - SoundUNder_ag
+
 networks:
   soundunder_network:
     driver: bridge
@@ -156,3 +211,8 @@ volumes:
   search_data:
   lib_db_data:
   lib_db_config:
+
+  account_ldap_data:
+  account_ldap_config:
+  account_ldap_certs:
+  phpldapadmin_data:

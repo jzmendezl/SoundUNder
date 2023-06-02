@@ -1,0 +1,33 @@
+version: "3.9"
+
+services:
+  soundUNder_ag_rp:
+    container_name: SoundUNder_ag_rp
+    image: soundunder_ag_rp
+    build:
+      context: .
+      dockerfile: ./SoundUNder_ag_rp/Dockerfile
+    restart: always
+    ports:
+      - "5000:443"
+
+  soundUNder_wa_rp:
+    container_name: SoundUNder_wa_rp
+    image: soundunder_wa_rp
+    build:
+      context: .
+      dockerfile: ./SoundUNder_wa_rp/Dockerfile
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+  
+  soundUNder_int_rp:
+    container_name: SoundUNder_int_rp
+    image: soundunder_int_rp
+    build:
+      context: .
+      dockerfile: ./SoundUNder_int_rp/Dockerfile
+    restart: always
+    ports:
+      - "5001:443"
