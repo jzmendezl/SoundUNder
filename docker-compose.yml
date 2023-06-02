@@ -150,43 +150,6 @@ services:
     links:
       - account-ldap
 
-  #proxys
-  #proxy API Gateway
-  soundUNder_ag_rp:
-    extends:
-      file: ./security/SoundUNder_rps/docker-compose.yml
-      service: soundUNder_ag_rp
-
-    depends_on:
-      - SoundUNder_ag
-
-    links:
-      - SoundUNder_ag
-
-  #proxy WA
-  soundUNder_wa_rp:
-    extends:
-      file: ./security/SoundUNder_rps/docker-compose.yml
-      service: soundUNder_wa_rp
-
-    depends_on:
-      - SoundUNder_wa
-
-    links:
-      - SoundUNder_wa
-
-  #proxy interface
-  soundUNder_int_rp:
-    extends:
-      file: ./security/SoundUNder_rps/docker-compose.yml
-      service: soundUNder_int_rp
-
-    depends_on:
-      - interface
-
-    links:
-      - interface
-
   #interface
   interface:
     extends:
@@ -198,6 +161,43 @@ services:
 
     links:
       - SoundUNder_ag
+  #proxys
+  #proxy API Gateway
+  # soundUNder_ag_rp:
+  #   extends:
+  #     file: ./security/SoundUNder_rps/docker-compose.yml
+  #     service: soundUNder_ag_rp
+
+  #   depends_on:
+  #     - SoundUNder_ag
+
+  #   links:
+  #     - SoundUNder_ag
+
+  #proxy WA
+  # soundUNder_wa_rp:
+  #   extends:
+  #     file: ./security/SoundUNder_rps/docker-compose.yml
+  #     service: soundUNder_wa_rp
+
+  #   depends_on:
+  #     - SoundUNder_wa
+
+  #   links:
+  #     - SoundUNder_wa
+
+  #proxy interface
+  # soundUNder_int_rp:
+  #   extends:
+  #     file: ./security/SoundUNder_rps/docker-compose.yml
+  #     service: soundUNder_int_rp
+
+  #   depends_on:
+  #     - interface
+
+  #   links:
+  #     - interface
+
 
 networks:
   soundunder_network:
