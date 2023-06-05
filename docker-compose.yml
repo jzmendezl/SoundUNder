@@ -45,6 +45,7 @@ services:
       - account-ldap
     links:
       - SoundUNder_auth_db
+      - account-ldap
 
   #audio_ms:
   ms:
